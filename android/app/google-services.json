@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175626563467",
+    "project_id": "projeto-app-academia",
+    "storage_bucket": "projeto-app-academia.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175626563467:android:85e599ed4c64f77e65898e",
+        "android_client_info": {
+          "package_name": "com.pingobras.malhamais.malhamais"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM8AVTqIs7YzePg-jb1zEgo9k7pJ1Oef0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
