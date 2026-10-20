@@ -1,12 +1,4 @@
-A tua ideia tem potencial para se tornar uma plataforma de fitness bastante interessante, principalmente porque não estás a pensar apenas num aplicativo para registrar exercícios, mas num sistema que combina treinos personalizados, inteligência artificial, gamificação, competição e evolução pessoal.
-
-O ponto principal é organizar tudo isso em módulos, definir como cada funcionalidade funciona e estabelecer uma arquitetura que permita começar com um MVP e evoluir sem precisar reconstruir o aplicativo inteiro.
-
-Abaixo, transformei a tua ideia numa documentação de produto mais profissional, que podes usar como base para desenvolver o aplicativo em Flutter, apresentar o projeto a outras pessoas ou orientar uma equipe de desenvolvimento.
-
-FitPulse — Fitness & Activity Tracker Mobile App UI by Madina Sheraliyeva on Dribbble
-
-# MALHA
+# MALHA+
 
 Documentação de Produto e Especificação Funcional
 
