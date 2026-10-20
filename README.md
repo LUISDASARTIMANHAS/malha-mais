@@ -8,13 +8,13 @@ Flutter MobileFitness & HealthIA & GamificaçãoMVP Evolutivo
 
 ## 1.1. Nome do produto
 
-MALHA — Plataforma Inteligente de Treinamento Físico
+MALHA+ — Plataforma Inteligente de Treinamento Físico
 
 Nome provisório, sujeito à validação de marca e disponibilidade.
 
 ## 1.2. Descrição
 
-O MALHA será um aplicativo mobile desenvolvido em Flutter, destinado ao acompanhamento, planejamento e otimização de atividades físicas, incluindo corrida, musculação e exercícios dinâmicos.
+O MALHA+ será um aplicativo mobile desenvolvido em Flutter, destinado ao acompanhamento, planejamento e otimização de atividades físicas, incluindo corrida, musculação e exercícios dinâmicos.
 
 A plataforma combinará monitoramento de desempenho, criação de metas pessoais, desafios individuais e coletivos, rankings competitivos e inteligência artificial para auxiliar os usuários na construção de rotinas de treinamento personalizadas.
 
@@ -39,13 +39,12 @@ Desenvolver uma plataforma que incentive a prática consistente de exercícios f
 
 # 2. Conceito central do aplicativo
 
-A principal característica do MALHA será transformar o treinamento físico numa experiência progressiva e interativa.
+A principal característica do MALHA+ será transformar o treinamento físico numa experiência progressiva e interativa.
 
 Ao entrar no aplicativo, o usuário poderá selecionar uma categoria de atividade física. Essa escolha determinará as funcionalidades, os treinos, as métricas e as competições disponíveis na sua área de utilização.
 
 Por exemplo:
 
-Caminar o correr: ¿qué es mejor para nuestra salud? | GQ España
 
 ## Corrida
 
@@ -75,7 +74,7 @@ mermaid
 ```
 
 flowchart TD
-    A["Abrir MALHA"] --> B["Autenticação"]
+    A["Abrir MALHA+"] --> B["Autenticação"]
     B --> C["Selecionar categoria"]
     C --> D["Carregar perfil e preferências"]
     D --> E["Home"]
@@ -192,7 +191,7 @@ O aplicativo também poderá apresentar gráficos de ritmo, velocidade, frequên
 
 # 5. Inteligência artificial e agente de treino
 
-A IA será um dos principais diferenciais do MALHA. A sua função será ajudar o usuário a planejar, compreender e ajustar os seus treinos.
+A IA será um dos principais diferenciais do MALHA+. A sua função será ajudar o usuário a planejar, compreender e ajustar os seus treinos.
 
 ## 5.1. Treinador virtual
 
@@ -211,7 +210,7 @@ Exemplo de interação:
 
 Quero conseguir correr 5 km sem parar. Atualmente consigo correr durante 10 minutos.
 
-MALHA AI · Exemplo ilustrativo
+MALHA+ AI · Exemplo ilustrativo
 
 Posso ajudar-te a construir uma progressão gradual para os 5 km.
 
@@ -254,7 +253,7 @@ O sistema deverá usar regras específicas para cada modalidade. Não seria adeq
 
 A tua ideia de reduzir a pontuação quando um exercício é repetido muitas vezes é importante para evitar que os usuários acumulem pontos artificialmente.
 
-O MALHA poderá implementar um mecanismo de retorno decrescente por repetição, no qual exercícios idênticos realizados repetidamente numa mesma janela de tempo concedem menos pontos adicionais.
+O MALHA+ poderá implementar um mecanismo de retorno decrescente por repetição, no qual exercícios idênticos realizados repetidamente numa mesma janela de tempo concedem menos pontos adicionais.
 
 Exemplo ilustrativo:
 
@@ -684,7 +683,7 @@ Somente depois de validar o MVP
 
 ## Conclusão
 
-O MALHA tem potencial para ser mais do que um contador de exercícios. A proposta é construir uma plataforma em que o usuário treina, acompanha resultados, estabelece metas, compete com outras pessoas e recebe orientação personalizada.
+O MALHA+ tem potencial para ser mais do que um contador de exercícios. A proposta é construir uma plataforma em que o usuário treina, acompanha resultados, estabelece metas, compete com outras pessoas e recebe orientação personalizada.
 
 A decisão mais importante agora é não tentar construir tudo ao mesmo tempo. Primeiro, cria uma experiência de treino excelente, com dados confiáveis e histórico bem estruturado. Depois, adiciona pontuação, missões, rankings e IA sobre essa base.
 
