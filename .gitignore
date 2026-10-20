@@ -43,4 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-examples-codigos/*.webp
+examples-codigos/**.webp
+examples-codigos/**.png
+examples-codigos/**.jpg
