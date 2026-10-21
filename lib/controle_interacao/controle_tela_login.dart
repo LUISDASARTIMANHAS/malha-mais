@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:malhamais/servicos/servico_autenticacao.dart';
-import 'package:malhamais/util/validadores.dart';
 
 /// Controla estado e regras de interação da [TelaLogin].
 class ControleTelaLogin extends ChangeNotifier {
@@ -71,20 +70,6 @@ class ControleTelaLogin extends ChangeNotifier {
     }
     _notificar();
     return resultado.sucesso;
-  }
-
-  /// Envia o e-mail de redefinição usando o e-mail já digitado.
-  ///
-  /// @return mensagem para exibir ao usuário.
-  Future<String> recuperarSenha() async {
-    final erroEmail = Validadores.email(emailController.text);
-    if (erroEmail != null) return 'Digite seu e-mail para recuperar a senha.';
-
-    final resultado =
-        await _servico.recuperarSenha(emailController.text.trim());
-    return resultado.sucesso
-        ? 'Se o e-mail estiver cadastrado, você receberá as instruções.'
-        : resultado.mensagemErro!;
   }
 
   void _registrarFalha() {
