@@ -1,91 +1,172 @@
 import 'package:flutter/material.dart';
-import 'package:malhamais/util/widget/botao.dart';
-import 'package:malhamais/util/widget/campo_edicao.dart';
+import 'package:flutter/services.dart';
+import 'package:malhamais/util/validadores.dart';
 
-import 'controle_interacao/controle_tela_login.dart';
+import '../controle_interacao/controle_tela_login.dart';
 
+/// Tela de login do Malha+.
 class TelaLogin extends StatefulWidget {
+  const TelaLogin({super.key});
+
   @override
-  _TelaLoginState createState() => _TelaLoginState();
+  State<TelaLogin> createState() => _TelaLoginState();
 }
 
 class _TelaLoginState extends State<TelaLogin> {
-  late ControleTelaLogin _controle;
+  final _controle = ControleTelaLogin();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controle = ControleTelaLogin();
+  void dispose() {
+    _controle.dispose();
+    super.dispose();
+  }
+
+  Future<void> _aoEntrar() async {
+    final sucesso = await _controle.entrar();
+    // Ao autenticar, o PortaoAutenticacao troca a tela sozinho.
+    if (sucesso) TextInput.finishAutofillContext();
+  }
+
+  Future<void> _aoRecuperarSenha() async {
+    final mensagem = await _controle.recuperarSenha();
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(mensagem)));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Login")),
-      body: _body(),
-    );
-  }
+    final tema = Theme.of(context);
 
-  _body() {
-    return Form(
-      key: _controle.formkey,
-      child: Container(
-        // Margem padrão no Material Design
-        padding: EdgeInsets.all(16),
-        child: ListView(
-          children: <Widget>[
-            CampoEdicao(
-              "Login",
-              texto_dica: "Digite o Login",
-              controlador: _controle.controlador_login,
-              teclado: TextInputType.emailAddress,
-              recebedor_foco: _controle.focus_senha,
-            ),
-            SizedBox(height: 10),
-            CampoEdicao(
-              "Senha",
-              texto_dica: "Digite a senha",
-              passaword: true,
-              validador: (String? text) {
-                if (text!.isEmpty)
-                  return "O campo '$text' está vazio e necessita ser preenchido";
-                else if (text.length < 6)
-                  return "A senha precisa ter no mínimo 6 caracteres";
-                return null;
-              },
-              controlador: _controle.controlador_senha,
-              marcador_foco: _controle.focus_senha,
-              recebedor_foco: _controle.focus_botao,
-            ),
-            SizedBox(height: 20),
-            Botao(
-              texto: "Login",
-              cor: Colors.green,
-              ao_clicar: () {
-                _controle.logar(context);
-              },
-              marcador_foco: _controle.focus_botao,
-            ),
-            Container(
-              height: 46,
-              margin: EdgeInsets.only(top: 20),
-              child: InkWell(
-                onTap: () {
-                  _controle.cadastrar(context);
-                },
-                child: Text(
-                  "Novo Usuário",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.green,
-                    decoration: TextDecoration.underline,
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 420),
+              child: ListenableBuilder(
+                listenable: _controle,
+                builder: (context, _) => Form(
+                  key: _controle.formKey,
+                  child: AutofillGroup(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Icon(
+                          Icons.fitness_center,
+                          size: 64,
+                          color: tema.colorScheme.primary,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Malha+',
+                          textAlign: TextAlign.center,
+                          style: tema.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Treine, evolua, compita.',
+                          textAlign: TextAlign.center,
+                          style: tema.textTheme.bodyMedium,
+                        ),
+                        const SizedBox(height: 32),
+                        _campoEmail(),
+                        const SizedBox(height: 16),
+                        _campoSenha(),
+                        if (_controle.mensagemErro != null) ...[
+                          const SizedBox(height: 12),
+                          Semantics(
+                            liveRegion: true,
+                            child: Text(
+                              _controle.mensagemErro!,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: tema.colorScheme.error),
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: 20),
+                        FilledButton(
+                          onPressed: _controle.carregando ? null : _aoEntrar,
+                          child: _controle.carregando
+                              ? const SizedBox(
+                                  height: 22,
+                                  width: 22,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.5,
+                                  ),
+                                )
+                              : const Text(
+                                  'Entrar',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: _controle.carregando
+                              ? null
+                              : _aoRecuperarSenha,
+                          child: const Text('Esqueci minha senha'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _campoEmail() {
+    return TextFormField(
+      controller: _controle.emailController,
+      validator: Validadores.email,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      autofillHints: const [AutofillHints.email],
+      autocorrect: false,
+      enableSuggestions: false,
+      maxLength: Validadores.tamanhoMaximoEmail,
+      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
+      onFieldSubmitted: (_) => _controle.focoSenha.requestFocus(),
+      decoration: const InputDecoration(
+        labelText: 'E-mail',
+        prefixIcon: Icon(Icons.email_outlined),
+        counterText: '',
+      ),
+    );
+  }
+
+  Widget _campoSenha() {
+    return TextFormField(
+      controller: _controle.senhaController,
+      focusNode: _controle.focoSenha,
+      validator: Validadores.senhaLogin,
+      obscureText: !_controle.senhaVisivel,
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.done,
+      autofillHints: const [AutofillHints.password],
+      autocorrect: false,
+      enableSuggestions: false,
+      maxLength: Validadores.tamanhoMaximoSenha,
+      onFieldSubmitted: (_) => _aoEntrar(),
+      decoration: InputDecoration(
+        labelText: 'Senha',
+        prefixIcon: const Icon(Icons.lock_outline),
+        counterText: '',
+        suffixIcon: IconButton(
+          tooltip: _controle.senhaVisivel ? 'Ocultar senha' : 'Mostrar senha',
+          icon: Icon(
+            _controle.senhaVisivel
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+          ),
+          onPressed: _controle.alternarVisibilidadeSenha,
         ),
       ),
     );

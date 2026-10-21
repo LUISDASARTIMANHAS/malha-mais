@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:malhamais/servicos/servico_autenticacao.dart';
 
-import '../tela_login.dart';
+import 'tela_login.dart';
 
 /// Decide entre login e área logada conforme o estado da sessão.
 ///
