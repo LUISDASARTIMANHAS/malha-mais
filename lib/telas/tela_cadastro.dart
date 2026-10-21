@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:malhamais/controle_interacao/controle_tela_cadastro.dart';
 import 'package:malhamais/util/validadores.dart';
-
-import 'controle_interacao/controle_tela_cadastro.dart';
 
 /// Tela de criação de conta do Malha+.
 class TelaCadastro extends StatefulWidget {
@@ -73,17 +72,19 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         ],
                         const SizedBox(height: 20),
                         FilledButton(
-                          onPressed:
-                              _controle.carregando ? null : _aoCadastrar,
+                          onPressed: _controle.carregando ? null : _aoCadastrar,
                           child: _controle.carregando
                               ? const SizedBox(
                                   height: 22,
                                   width: 22,
                                   child: CircularProgressIndicator(
-                                      strokeWidth: 2.5),
+                                    strokeWidth: 2.5,
+                                  ),
                                 )
-                              : const Text('Criar conta',
-                                  style: TextStyle(fontSize: 18)),
+                              : const Text(
+                                  'Criar conta',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
                         const SizedBox(height: 8),
                         TextButton(
@@ -162,9 +163,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
         counterText: '',
         suffixIcon: IconButton(
           tooltip: _controle.senhaVisivel ? 'Ocultar senha' : 'Mostrar senha',
-          icon: Icon(_controle.senhaVisivel
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined),
+          icon: Icon(
+            _controle.senhaVisivel
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+          ),
           onPressed: _controle.alternarVisibilidadeSenha,
         ),
       ),
@@ -175,8 +178,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
     return TextFormField(
       controller: _controle.confirmacaoController,
       focusNode: _controle.focoConfirmacao,
-      validator:
-          Validadores.confirmacao(() => _controle.senhaController.text),
+      validator: Validadores.confirmacao(() => _controle.senhaController.text),
       obscureText: !_controle.senhaVisivel,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.done,
@@ -213,8 +215,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
             liveRegion: true,
             child: Text(
               'É necessário aceitar para criar a conta',
-              style: tema.textTheme.bodySmall
-                  ?.copyWith(color: tema.colorScheme.error),
+              style: tema.textTheme.bodySmall?.copyWith(
+                color: tema.colorScheme.error,
+              ),
             ),
           ),
       ],
@@ -246,9 +249,13 @@ class _PainelRequisitos extends StatelessWidget {
           atendido: requisitos.tamanho,
         ),
         _ItemRequisito(
-            texto: 'Uma letra minúscula', atendido: requisitos.minuscula),
+          texto: 'Uma letra minúscula',
+          atendido: requisitos.minuscula,
+        ),
         _ItemRequisito(
-            texto: 'Uma letra maiúscula', atendido: requisitos.maiuscula),
+          texto: 'Uma letra maiúscula',
+          atendido: requisitos.maiuscula,
+        ),
         _ItemRequisito(texto: 'Um número', atendido: requisitos.numero),
       ],
     );

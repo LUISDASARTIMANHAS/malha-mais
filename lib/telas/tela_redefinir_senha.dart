@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:malhamais/controle_interacao/controle_tela_redefinir_senha.dart';
 import 'package:malhamais/util/validadores.dart';
-
-import 'controle_interacao/controle_tela_redefinir_senha.dart';
 
 /// Tela para solicitar o link de redefinição de senha.
 class TelaRedefinirSenha extends StatefulWidget {
@@ -62,10 +61,13 @@ class _TelaRedefinirSenhaState extends State<TelaRedefinirSenha> {
         children: [
           Icon(Icons.lock_reset, size: 64, color: tema.colorScheme.primary),
           const SizedBox(height: 12),
-          Text('Esqueceu a senha?',
-              textAlign: TextAlign.center,
-              style: tema.textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold)),
+          Text(
+            'Esqueceu a senha?',
+            textAlign: TextAlign.center,
+            style: tema.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 8),
           Text(
             'Informe o e-mail da sua conta e enviaremos um link '
@@ -125,13 +127,19 @@ class _TelaRedefinirSenhaState extends State<TelaRedefinirSenha> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Icon(Icons.mark_email_read_outlined,
-            size: 64, color: tema.colorScheme.primary),
+        Icon(
+          Icons.mark_email_read_outlined,
+          size: 64,
+          color: tema.colorScheme.primary,
+        ),
         const SizedBox(height: 12),
-        Text('Verifique seu e-mail',
-            textAlign: TextAlign.center,
-            style: tema.textTheme.headlineSmall
-                ?.copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          'Verifique seu e-mail',
+          textAlign: TextAlign.center,
+          style: tema.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 8),
         Semantics(
           liveRegion: true,

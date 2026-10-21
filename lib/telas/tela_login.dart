@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:malhamais/controle_interacao/controle_tela_login.dart';
 import 'package:malhamais/util/validadores.dart';
 
-import 'controle_interacao/controle_tela_login.dart';
 import 'tela_cadastro.dart';
 import 'tela_redefinir_senha.dart';
 
@@ -52,16 +52,24 @@ class _TelaLoginState extends State<TelaLogin> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Icon(Icons.fitness_center,
-                            size: 64, color: tema.colorScheme.primary),
+                        Icon(
+                          Icons.fitness_center,
+                          size: 64,
+                          color: tema.colorScheme.primary,
+                        ),
                         const SizedBox(height: 12),
-                        Text('Malha+',
-                            textAlign: TextAlign.center,
-                            style: tema.textTheme.headlineMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                        Text('Treine, evolua, compita.',
-                            textAlign: TextAlign.center,
-                            style: tema.textTheme.bodyMedium),
+                        Text(
+                          'Malha+',
+                          textAlign: TextAlign.center,
+                          style: tema.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Treine, evolua, compita.',
+                          textAlign: TextAlign.center,
+                          style: tema.textTheme.bodyMedium,
+                        ),
                         const SizedBox(height: 32),
                         _campoEmail(),
                         const SizedBox(height: 16),
@@ -85,19 +93,24 @@ class _TelaLoginState extends State<TelaLogin> {
                                   height: 22,
                                   width: 22,
                                   child: CircularProgressIndicator(
-                                      strokeWidth: 2.5),
+                                    strokeWidth: 2.5,
+                                  ),
                                 )
-                              : const Text('Entrar',
-                                  style: TextStyle(fontSize: 18)),
+                              : const Text(
+                                  'Entrar',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
                         const SizedBox(height: 8),
                         TextButton(
                           onPressed: _controle.carregando
                               ? null
-                              : () => _abrir(TelaRedefinirSenha(
-                                    emailInicial:
-                                        _controle.emailController.text.trim(),
-                                  )),
+                              : () => _abrir(
+                                  TelaRedefinirSenha(
+                                    emailInicial: _controle.emailController.text
+                                        .trim(),
+                                  ),
+                                ),
                           child: const Text('Esqueci minha senha'),
                         ),
                         OutlinedButton(
@@ -157,9 +170,11 @@ class _TelaLoginState extends State<TelaLogin> {
         counterText: '',
         suffixIcon: IconButton(
           tooltip: _controle.senhaVisivel ? 'Ocultar senha' : 'Mostrar senha',
-          icon: Icon(_controle.senhaVisivel
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined),
+          icon: Icon(
+            _controle.senhaVisivel
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+          ),
           onPressed: _controle.alternarVisibilidadeSenha,
         ),
       ),
