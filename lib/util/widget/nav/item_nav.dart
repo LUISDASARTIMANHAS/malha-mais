@@ -1,3 +1,5 @@
+// lib/util/widget/nav/item_nav.dart
+
 import 'package:flutter/material.dart';
 
 /// Descreve um destino do [Nav]: aparência na barra e tela raiz da aba.

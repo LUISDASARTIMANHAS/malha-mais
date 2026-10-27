@@ -1,3 +1,5 @@
+// lib/main.dart
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:malhamais/telas/portao_autenticacao.dart';
@@ -16,7 +18,7 @@ class MalhaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final esquemaCores = ColorScheme.fromSeed(
       seedColor: Colors.green,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
     );
 
     return MaterialApp(

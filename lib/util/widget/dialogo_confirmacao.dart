@@ -1,3 +1,5 @@
+// lib/util/widget/dialogo_confirmacao.dart
+
 import 'package:flutter/material.dart';
 
 /// Pergunta de confirmação (sim/não) reutilizável.

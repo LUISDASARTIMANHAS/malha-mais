@@ -1,3 +1,5 @@
+// lib/util/widget/nav/barra_navegacao.dart
+
 import 'package:flutter/material.dart';
 
 import 'item_nav.dart';

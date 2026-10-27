@@ -1,3 +1,5 @@
+// lib/util/widget/nav/aba_navegador.dart
+
 import 'package:flutter/material.dart';
 
 /// Aba com pilha de navegação própria.

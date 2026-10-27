@@ -1,3 +1,5 @@
+// lib/util/widget/avatar_inicial.dart
+
 import 'package:flutter/material.dart';
 
 /// Avatar circular com a inicial do nome.

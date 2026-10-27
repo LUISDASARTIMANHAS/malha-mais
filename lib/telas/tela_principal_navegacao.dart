@@ -1,3 +1,5 @@
+// lib/telas/tela_principal_navegacao.dart
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:malhamais/navegacao/itens_navegacao.dart';

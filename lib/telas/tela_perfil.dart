@@ -1,3 +1,5 @@
+// lib/telas/tela_perfil.dart
+
 import 'package:flutter/material.dart';
 import 'package:malhamais/util/widget/avatar_inicial.dart';
 import 'package:malhamais/util/widget/dialogo_confirmacao.dart';

@@ -1,105 +1,97 @@
+// lib/telas/controle_interacao/controle_tela_login.dart
+
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:malhamais/dominio/usuario.dart';
-import 'package:malhamais/util/nav.dart';
-import 'package:malhamais/util/toast.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:malhamais/servicos/servico_autenticacao.dart';
 
-import '../tela_principal.dart';
+/// Controla estado e regras de interação da [TelaLogin].
+class ControleTelaLogin extends ChangeNotifier {
+  ControleTelaLogin({ServicoAutenticacao? servico})
+      : _servico = servico ?? ServicoAutenticacao();
 
-class ControleTelaLogin {
-  // Controles de edição do login e senha
-  final controlador_login = TextEditingController();
-  final controlador_senha = TextEditingController();
+  static const int _maxFalhas = 5;
+  static const Duration _duracaoBloqueio = Duration(seconds: 30);
 
-  // Controlador de formulário (para fazer validações)
-  final formkey = GlobalKey<FormState>();
+  final ServicoAutenticacao _servico;
 
-  // Controladores de foco
-  final focus_senha = FocusNode();
-  final focus_botao = FocusNode();
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
+  final focoSenha = FocusNode();
 
-  // Autenticação
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _carregando = false;
+  bool _senhaVisivel = false;
+  bool _descartado = false;
+  String? _mensagemErro;
+  int _falhas = 0;
+  DateTime? _bloqueadoAte;
 
-  CollectionReference<Map<String, dynamic>> get _collection_usuarios =>
-      FirebaseFirestore.instance.collection('usuarios');
+  bool get carregando => _carregando;
+  bool get senhaVisivel => _senhaVisivel;
+  String? get mensagemErro => _mensagemErro;
 
-  void logar(BuildContext context) async {
-    if (formkey.currentState!.validate()) {
-      String login = controlador_login.text.trim();
-      String senha = controlador_senha.text.trim();
+  bool get _bloqueado =>
+      _bloqueadoAte != null && DateTime.now().isBefore(_bloqueadoAte!);
 
-      if (EmailValidator.validate(login)) {
-        try {
-          // Logando
-          UserCredential userCredential = await _auth
-              .signInWithEmailAndPassword(email: login, password: senha);
-          _irParaTelaPrincipal(userCredential.user, context);
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'user-not-found') {
-            MensagemAlerta(
-              context,
-              "Erro: Usuário não encontrado para o email informado",
-            );
-          } else if (e.code == 'wrong-password') {
-            MensagemAlerta(context, "Erro: Password inválido!!!");
-            print('Wrong password provided for that user.');
-          }
-        }
-      } else {
-        MensagemAlerta(context, "Erro: Email informado com formato inválido");
-      }
+  /// Mostra/oculta a senha digitada.
+  void alternarVisibilidadeSenha() {
+    _senhaVisivel = !_senhaVisivel;
+    _notificar();
+  }
+
+  /// Valida o formulário e tenta autenticar.
+  ///
+  /// Aplica um bloqueio local temporário após várias falhas seguidas
+  /// (camada extra sobre a proteção do próprio Firebase).
+  ///
+  /// @return `true` se autenticou com sucesso.
+  Future<bool> entrar() async {
+    if (_carregando) return false;
+    if (_bloqueado) {
+      _mensagemErro = 'Muitas tentativas. Aguarde alguns segundos.';
+      _notificar();
+      return false;
+    }
+    if (!(formKey.currentState?.validate() ?? false)) return false;
+
+    _carregando = true;
+    _mensagemErro = null;
+    _notificar();
+
+    final resultado = await _servico.entrar(
+      email: emailController.text.trim(),
+      senha: senhaController.text,
+    );
+
+    _carregando = false;
+    if (resultado.sucesso) {
+      _falhas = 0;
+      senhaController.clear();
+    } else {
+      _registrarFalha();
+      _mensagemErro = resultado.mensagemErro;
+    }
+    _notificar();
+    return resultado.sucesso;
+  }
+
+  void _registrarFalha() {
+    _falhas++;
+    if (_falhas >= _maxFalhas) {
+      _bloqueadoAte = DateTime.now().add(_duracaoBloqueio);
+      _falhas = 0;
     }
   }
 
-  void _irParaTelaPrincipal(User? user, BuildContext context) {
-    // Buscando o usuário no serviço de armazenamento e chamando a tela Principal
-    _collection_usuarios
-        .where("email", isEqualTo: "${user!.email}")
-        .snapshots()
-        .listen((data) {
-          Usuario usuario = Usuario.fromMap(data.docs[0].data());
-          usuario.id = data.docs[0].id;
-          push(context, TelaPrincipal(usuario), replace: true);
-        });
+  void _notificar() {
+    if (!_descartado) notifyListeners();
   }
 
-  void cadastrar(BuildContext context) async {
-    if (formkey.currentState!.validate()) {
-      String login = controlador_login.text.trim();
-      String senha = controlador_senha.text.trim();
-
-      if (EmailValidator.validate(login)) {
-        try {
-          UserCredential userCredential = await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(email: login, password: senha);
-
-          // No serviço de armazenamento
-          _collection_usuarios
-              .add({'email': login})
-              .then(
-                (value) => _irParaTelaPrincipal(userCredential.user, context),
-              )
-              .catchError(
-                (error) => print("Falha ao adicionar o usuário: $error"),
-              );
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'weak-password') {
-            MensagemAlerta(context, "Erro: A senha fornecida é muito fraca");
-          } else if (e.code == 'email-already-in-use') {
-            MensagemAlerta(
-              context,
-              "Erro: Já existe conta com o email informado",
-            );
-          }
-        } catch (e) {
-          print(e);
-        }
-      } else {
-        MensagemAlerta(context, "Erro: Email informado com formato inválido");
-      }
-    }
+  @override
+  void dispose() {
+    _descartado = true;
+    emailController.dispose();
+    senhaController.dispose();
+    focoSenha.dispose();
+    super.dispose();
   }
 }
