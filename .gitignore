@@ -46,3 +46,4 @@ app.*.map.json
 examples-codigos/**.webp
 examples-codigos/**.png
 examples-codigos/**.jpg
+.env
