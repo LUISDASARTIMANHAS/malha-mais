@@ -19,6 +19,20 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
 }
 
+// Ler variáveis do arquivo .env na raiz do projeto Flutter
+val envFile = rootProject.projectDir.parentFile.resolve(".env")
+
+val envProperties = Properties().apply {
+    if (envFile.exists()) {
+        envFile.inputStream().use { load(it) }
+    }
+}
+
+val androidMapApiKey =
+    envProperties.getProperty("androidMapApiKey")
+        ?: System.getenv("androidMapApiKey")
+        ?: ""
+
 android {
     namespace = "com.pingobras.malhamais.malhamais"
     compileSdk = flutter.compileSdkVersion
