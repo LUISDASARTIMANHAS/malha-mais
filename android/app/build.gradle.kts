@@ -1,19 +1,20 @@
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    // O plugin Flutter deve vir depois dos plugins Android e Kotlin.
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
 }
 
 dependencies {
-    // Import the Firebase BoM
+    // Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
 
-    // Add the dependencies for any other desired Firebase products
+    // Firebase Analytics
     implementation("com.google.firebase:firebase-analytics")
 }
 
@@ -33,6 +34,10 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // Google Maps API Key
+        manifestPlaceholders["androidMapApiKey"] =
+            System.getenv("androidMapApiKey") ?: ""
     }
 
     buildTypes {
@@ -42,7 +47,7 @@ android {
     }
 }
 
-// Configuração do compilador Kotlin 2.0+
+// Configuração do compilador Kotlin
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
