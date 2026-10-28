@@ -18,7 +18,7 @@ class MalhaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final esquemaCores = ColorScheme.fromSeed(
       seedColor: Colors.green,
-      brightness: Brightness.light,
+      brightness: Brightness.dark,
     );
 
     return MaterialApp(
