@@ -31,7 +31,7 @@ List<ItemNav> construirItensNavegacao({
       rotulo: 'Dashboard',
       icone: Icons.dashboard_outlined,
       iconeSelecionado: Icons.dashboard,
-      construirRaiz: (_) => const TelaDashboard(),
+      construirRaiz: (_) => TelaDashboard(nome: nomeDeExibicao(usuario)),
     ),
     ItemNav(
       rotulo: 'Exercícios',

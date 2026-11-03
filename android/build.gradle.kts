@@ -6,6 +6,17 @@ allprojects {
     }
 }
 
+val newBuildDir: Directory =
+    rootProject.layout.buildDirectory
+        .dir("../../build")
+        .get()
+rootProject.layout.buildDirectory.value(newBuildDir)
+
+subprojects {
+    val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
+    project.layout.buildDirectory.value(newSubprojectBuildDir)
+}
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
@@ -25,12 +36,12 @@ tasks.register<Copy>("exportDebugApk") {
         include("app-debug.apk")
     }
 
-    into(rootProject.layout.projectDirectory.dir("../apks"))
+    into(rootProject.file("../apks"))
 
     rename { "malha+_debug.apk" }
 
     doLast {
-        val arquivo = rootProject.file("../apks/malha+-debug.apk")
+        val arquivo = rootProject.file("../apks/malha+_debug.apk")
 
         println("================================")
         println("APK DEBUG EXPORTADO: ${arquivo.absolutePath}")
@@ -45,7 +56,7 @@ tasks.register<Copy>("exportReleaseApk") {
         include("app-release.apk")
     }
 
-    into(rootProject.layout.projectDirectory.dir("../apks"))
+    into(rootProject.file("../apks"))
 
     rename { "malha+.apk" }
 
