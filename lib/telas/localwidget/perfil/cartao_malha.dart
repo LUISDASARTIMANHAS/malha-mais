@@ -38,11 +38,11 @@ class CartaoMalha extends StatelessWidget {
       ),
       // Material para o efeito de toque (ListTile) aparecer sobre o cartão.
       child: Material(
-        color: c.cartao,
+        color: c.cartaoApp,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: raio,
-          side: BorderSide(color: c.borda),
+          side: BorderSide(color: c.bordaApp),
         ),
         child: Padding(padding: padding, child: child),
       ),

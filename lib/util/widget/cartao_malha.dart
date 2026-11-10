@@ -20,13 +20,15 @@ class CartaoMalha extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cores = context.cores;
+
     return Container(
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: CoresMalha.cartao,
+        color: cores.cartaoApp,
         borderRadius: BorderRadius.circular(CoresMalha.raioCartao),
-        border: Border.all(color: CoresMalha.borda),
+        border: Border.all(color: cores.bordaApp),
         boxShadow: corBrilho == null
             ? null
             : [

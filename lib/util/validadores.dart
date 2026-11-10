@@ -2,6 +2,7 @@
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/widgets.dart' show FormFieldValidator;
+import 'package:malhamais/util/unidades.dart';
 
 /// Requisitos de uma senha nova, avaliados em tempo real no cadastro.
 class RequisitosSenha {

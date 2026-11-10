@@ -46,7 +46,7 @@ class AvatarPerfil extends StatelessWidget {
         ),
         child: Container(
           padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(shape: BoxShape.circle, color: c.fundo),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: c.fundoApp),
           child: ClipOval(
             child: SizedBox.square(
               dimension: raio * 2,

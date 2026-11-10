@@ -18,17 +18,17 @@ class AppTema {
           onPrimary: c.sobreNeon,
           secondary: c.roxo,
           tertiary: c.esmeralda,
-          surface: c.cartao,
+          surface: c.cartaoApp,
         );
     final raio12 = BorderRadius.circular(12);
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: esquema,
-      scaffoldBackgroundColor: c.fundo,
+      scaffoldBackgroundColor: c.fundoApp,
       extensions: [c],
       appBarTheme: AppBarTheme(
-        backgroundColor: c.fundo,
+        backgroundColor: c.fundoApp,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
@@ -55,17 +55,17 @@ class AppTema {
         ),
       ),
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: c.cartao,
+        backgroundColor: c.cartaoApp,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
         ),
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: c.cartao,
+        backgroundColor: c.cartaoApp,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: c.cartao,
+        backgroundColor: c.cartaoApp,
         indicatorColor: c.neon.withValues(alpha: 0.16),
         iconTheme: WidgetStateProperty.resolveWith(
           (estados) => IconThemeData(

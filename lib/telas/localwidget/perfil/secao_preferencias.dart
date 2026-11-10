@@ -57,7 +57,7 @@ class SecaoPreferencias extends StatelessWidget {
       selected: ativa,
       showCheckmark: false,
       selectedColor: c.neon.withValues(alpha: 0.16),
-      side: BorderSide(color: ativa ? c.neon : c.borda),
+      side: BorderSide(color: ativa ? c.neon : c.bordaApp),
       onSelected: (_) => aoAlternar(modalidade),
     );
   }
