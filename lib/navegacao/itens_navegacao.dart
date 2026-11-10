@@ -49,11 +49,7 @@ List<ItemNav> construirItensNavegacao({
       rotulo: 'Perfil',
       icone: Icons.person_outline,
       iconeSelecionado: Icons.person,
-      construirRaiz: (_) => TelaPerfil(
-        nome: nomeDeExibicao(usuario),
-        email: usuario.email ?? '',
-        aoSair: aoSair,
-      ),
+      construirRaiz: (_) => TelaPerfil(usuario: usuario, aoSair: aoSair),
     ),
   ];
 }

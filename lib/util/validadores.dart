@@ -1,7 +1,7 @@
 // lib/util/validadores.dart
 
-import 'package:flutter/widgets.dart' show FormFieldValidator;
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/widgets.dart' show FormFieldValidator;
 
 /// Requisitos de uma senha nova, avaliados em tempo real no cadastro.
 class RequisitosSenha {
@@ -32,8 +32,65 @@ class Validadores {
   static const int tamanhoMaximoSenha = 128;
   static const int tamanhoMaximoNome = 60;
 
-  static final RegExp _padraoNome =
-      RegExp(r"^\p{L}[\p{L}\p{M} '.-]*$", unicode: true);
+  static final RegExp _padraoNome = RegExp(
+    r"^\p{L}[\p{L}\p{M} '.-]*$",
+    unicode: true,
+  );
+
+  /// Converte texto com vírgula ou ponto em número (rejeita NaN/infinito).
+  ///
+  /// @param texto valor digitado.
+  /// @return número ou `null` se inválido.
+  static double? lerDecimal(String texto) {
+    final numero = double.tryParse(texto.trim().replaceAll(',', '.'));
+    return numero != null && numero.isFinite ? numero : null;
+  }
+
+  /// Valida decimal dentro de um intervalo.
+  ///
+  /// @param valor texto digitado.
+  /// @param min limite inferior (na unidade exibida).
+  /// @param max limite superior (na unidade exibida).
+  /// @param obrigatorio se `false`, vazio é aceito.
+  /// @param unidade rótulo mostrado na mensagem.
+  /// @return mensagem de erro ou `null`.
+  static String? decimalEntre(
+    String? valor, {
+    required double min,
+    required double max,
+    bool obrigatorio = true,
+    String unidade = '',
+  }) {
+    final texto = valor?.trim() ?? '';
+    if (texto.isEmpty) return obrigatorio ? 'Informe um valor' : null;
+    final numero = lerDecimal(texto);
+    if (numero == null) return 'Número inválido';
+    if (numero < min || numero > max) {
+      return 'Use um valor entre ${Unidades.formatar(min)} e '
+              '${Unidades.formatar(max)} $unidade'
+          .trim();
+    }
+    return null;
+  }
+
+  /// Valida inteiro dentro de um intervalo.
+  ///
+  /// @param valor texto digitado.
+  /// @param min limite inferior.
+  /// @param max limite superior.
+  /// @return mensagem de erro ou `null`.
+  static String? inteiroEntre(
+    String? valor, {
+    required int min,
+    required int max,
+  }) {
+    final texto = valor?.trim() ?? '';
+    if (texto.isEmpty) return 'Informe um valor';
+    final numero = int.tryParse(texto);
+    if (numero == null) return 'Digite um número inteiro';
+    if (numero < min || numero > max) return 'Use um valor entre $min e $max';
+    return null;
+  }
 
   /// Valida o nome de exibição (letras, espaços, apóstrofo, ponto e hífen).
   ///
